@@ -19,8 +19,8 @@ public class TeamsServiceImpl implements TeamsService {
         this.teamsClient = teamsClient;
     }
 
-    public Team getTeam(UUID id) {
-        return teamsClient.getTeam(id).getBody();
+    public Team getTeam(UUID teamId) {
+        return teamsClient.getTeam(teamId).getBody();
     }
 
     public List<Team> getTeams() {

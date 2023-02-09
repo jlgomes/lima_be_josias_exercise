@@ -46,7 +46,7 @@ public class RolesServiceImpl implements RolesService {
         return roleRepository.findAll();
     }
 
-    private Role getDefaultRole() {
+    public Role getDefaultRole() {
         return roleRepository.findByName(DEFAULT_ROLE)
                 .orElseThrow(() -> new IllegalStateException("Default role is not configured"));
     }

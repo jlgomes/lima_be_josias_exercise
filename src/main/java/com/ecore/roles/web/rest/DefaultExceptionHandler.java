@@ -10,19 +10,19 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class DefaultExceptionHandler {
 
-    @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handle(ResourceNotFoundException exception) {
-        return createResponse(404, exception.getMessage());
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handle(ResourceNotFoundException resourceNotFoundException) {
+        return createResponse(404, resourceNotFoundException.getMessage());
     }
 
-    @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handle(ResourceExistsException exception) {
-        return createResponse(400, exception.getMessage());
+    @ExceptionHandler(ResourceExistsException.class)
+    public ResponseEntity<ErrorResponse> handle(ResourceExistsException resourceExistsException) {
+        return createResponse(400, resourceExistsException.getMessage());
     }
 
-    @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handle(IllegalStateException exception) {
-        return createResponse(500, exception.getMessage());
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<ErrorResponse> handle(IllegalStateException illegalStateException) {
+        return createResponse(500, illegalStateException.getMessage());
     }
 
     private ResponseEntity<ErrorResponse> createResponse(int status, String exception) {
