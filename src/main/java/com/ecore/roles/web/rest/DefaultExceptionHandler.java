@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.persistence.EntityNotFoundException;
+
 @ControllerAdvice
 public class DefaultExceptionHandler {
 
@@ -18,6 +20,11 @@ public class DefaultExceptionHandler {
     @ExceptionHandler(ResourceExistsException.class)
     public ResponseEntity<ErrorResponse> handle(ResourceExistsException resourceExistsException) {
         return createResponse(400, resourceExistsException.getMessage());
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handle(EntityNotFoundException entityNotFoundException) {
+        return createResponse(400, entityNotFoundException.getMessage());
     }
 
     @ExceptionHandler(IllegalStateException.class)
