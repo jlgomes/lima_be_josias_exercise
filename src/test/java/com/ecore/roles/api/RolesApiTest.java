@@ -134,7 +134,7 @@ public class RolesApiTest {
         Membership expectedMembership = DEFAULT_MEMBERSHIP();
         mockGetTeamById(mockServer, ORDINARY_CORAL_LYNX_TEAM_UUID, ORDINARY_CORAL_LYNX_TEAM());
         createMembership(expectedMembership)
-                .statusCode(201);
+                .statusCode(200);
 
         getRole(expectedMembership.getUser().getId(), expectedMembership.getTeam().getId())
                 .statusCode(200)
@@ -157,6 +157,6 @@ public class RolesApiTest {
     void shouldFailToGetRoleByUserIdAndTeamIdWhenItDoesNotExist() {
         mockGetTeamById(mockServer, UUID_1, null);
         getRole(GIANNI_USER_UUID, UUID_1)
-                .validate(404, format("Team %s not found", UUID_1));
+                .validate(404, format("Role %s %s not found", GIANNI_USER_UUID, UUID_1));
     }
 }

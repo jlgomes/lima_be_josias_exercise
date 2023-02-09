@@ -2,7 +2,9 @@ package com.ecore.roles.service.impl;
 
 import com.ecore.roles.exception.ResourceExistsException;
 import com.ecore.roles.exception.ResourceNotFoundException;
+import com.ecore.roles.model.Membership;
 import com.ecore.roles.model.Role;
+import com.ecore.roles.repository.MembershipRepository;
 import com.ecore.roles.repository.RoleRepository;
 import com.ecore.roles.service.RolesService;
 import lombok.NonNull;
@@ -21,10 +23,13 @@ public class RolesServiceImpl implements RolesService {
 
     private final RoleRepository roleRepository;
 
+    private final MembershipRepository membershipRepository;
+
     @Autowired
     public RolesServiceImpl(
-            RoleRepository roleRepository) {
+            RoleRepository roleRepository, MembershipRepository membershipRepository) {
         this.roleRepository = roleRepository;
+        this.membershipRepository = membershipRepository;
     }
 
     @Override
@@ -39,6 +44,13 @@ public class RolesServiceImpl implements RolesService {
     public Role GetRole(@NonNull UUID roleId) {
         return roleRepository.findById(roleId)
                 .orElseThrow(() -> new ResourceNotFoundException(Role.class, roleId));
+    }
+
+    @Override
+    public Role GetRole(UUID userId, UUID teamId) {
+        Membership membership = membershipRepository.findByUserIdAndTeamId(userId, teamId)
+                .orElseThrow(() -> new ResourceNotFoundException(Role.class, userId, teamId));
+        return membership.getRole();
     }
 
     @Override

@@ -24,7 +24,7 @@ public class TestData {
     public static final UUID GIANNI_USER_UUID = UUID.fromString("fd282131-d8aa-4819-b0c8-d9e0bfb1b75c");
 
     public static final UUID ORDINARY_CORAL_LYNX_TEAM_UUID =
-            UUID.fromString("7676a4bf-adfe-415c-941b-1739af07039b");
+            UUID.fromString("4c5a99a1-48ab-4654-8692-dbd41eb2714b");
 
     public static final UUID DEFAULT_MEMBERSHIP_UUID =
             UUID.fromString("98de61a0-b9e3-11ec-8422-0242ac120002");
