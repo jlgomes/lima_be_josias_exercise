@@ -116,7 +116,7 @@ public class MembershipsApiTests {
     @Test
     void shouldFailToCreateRoleMembershipWhenRoleDoesNotExist() {
         Membership expectedMembership = DEFAULT_MEMBERSHIP();
-        expectedMembership.setRole(Role.builder().id(UUID_1).build());
+        expectedMembership.setRole(Role.builder().id(UUID_1).name("role 1").build());
 
         createMembership(expectedMembership)
                 .validate(404, format("Role %s not found", UUID_1));
