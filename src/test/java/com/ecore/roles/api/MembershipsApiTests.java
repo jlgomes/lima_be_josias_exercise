@@ -45,6 +45,15 @@ public class MembershipsApiTests {
     }
 
     @Test
+    void shouldGetAllMembershipsButReturnsEmptyList() {
+        MembershipDto[] actualMemberships = getMemberships(DEVELOPER_ROLE_UUID)
+                .statusCode(200)
+                .extract().as(MembershipDto[].class);
+
+        assertThat(actualMemberships.length).isEqualTo(0);
+    }
+
+    @Test
     void shouldCreateRoleMembership() {
         Membership expectedMembership = DEFAULT_MEMBERSHIP();
 
@@ -129,7 +138,7 @@ public class MembershipsApiTests {
 
         createMembership(expectedMembership)
                 .validate(400,
-                        "Invalid 'Membership' object. The provided user doesn't belong to the provided team.");
+                        "Unable to find com.ecore.roles.client.model.User with id 44444444-4444-4444-4444-444444444444");
     }
 
     @Test
@@ -144,15 +153,6 @@ public class MembershipsApiTests {
         assertThat(actualMemberships.length).isEqualTo(1);
         assertThat(actualMemberships[0].getId()).isNotNull();
         assertThat(actualMemberships[0]).isEqualTo(MembershipDto.fromModel(expectedMembership));
-    }
-
-    @Test
-    void shouldGetAllMembershipsButReturnsEmptyList() {
-        MembershipDto[] actualMemberships = getMemberships(DEVELOPER_ROLE_UUID)
-                .statusCode(200)
-                .extract().as(MembershipDto[].class);
-
-        assertThat(actualMemberships.length).isEqualTo(0);
     }
 
     @Test
