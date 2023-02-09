@@ -6,6 +6,8 @@ import com.ecore.roles.model.Membership;
 import com.ecore.roles.model.Role;
 import org.assertj.core.util.Lists;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class TestData {
@@ -55,8 +57,24 @@ public class TestData {
                 .id(ORDINARY_CORAL_LYNX_TEAM_UUID)
                 .name("System Team").build();
         if (full) {
-            team.setTeamLeadId(UUID_1);
-            team.setTeamMemberIds(Lists.list(UUID_2, UUID_3, GIANNI_USER_UUID));
+            User teamLeader = User.builder()
+                .id(UUID_1)
+                .displayName("Team Lider").build();
+
+            team.setTeamLead(teamLeader);
+
+            User teamMember1 = User.builder()
+                    .id(UUID_1)
+                    .displayName("Team Lider").build();
+            User teamMember2 = User.builder()
+                    .id(UUID_2)
+                    .displayName("Team Lider").build();
+            List<User> teamMembers = new ArrayList<>();
+            teamMembers.add(teamMember1);
+            teamMembers.add(teamMember2);
+            teamMembers.add(GIANNI_USER());
+
+            team.setTeamMembers(teamMembers);
         }
         return team;
     }

@@ -1,13 +1,17 @@
 package com.ecore.roles.client.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -15,24 +19,23 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
+@Entity
 @EqualsAndHashCode
 public class User {
 
-    @JsonProperty
+    @Id
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Type(type = "uuid-char")
     private UUID id;
 
-    @JsonProperty
     private String firstName;
 
-    @JsonProperty
     private String lastName;
 
-    @JsonProperty
     private String displayName;
 
-    @JsonProperty
     private String avatarUrl;
 
-    @JsonProperty
     private String location;
 }
