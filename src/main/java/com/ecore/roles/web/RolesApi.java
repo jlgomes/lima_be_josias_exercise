@@ -9,7 +9,7 @@ import java.util.UUID;
 public interface RolesApi {
 
     ResponseEntity<RoleDto> createRole(
-            RoleDto role);
+            RoleDto roleDto);
 
     ResponseEntity<List<RoleDto>> getRoles();
 
