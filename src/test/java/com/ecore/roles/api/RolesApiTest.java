@@ -73,7 +73,7 @@ public class RolesApiTest {
         Role expectedRole = DEVOPS_ROLE();
 
         RoleDto actualRole = createRole(expectedRole)
-                .statusCode(201)
+                .statusCode(200)
                 .extract().as(RoleDto.class);
 
         assertThat(actualRole.getName()).isEqualTo(expectedRole.getName());

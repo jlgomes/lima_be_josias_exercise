@@ -46,9 +46,10 @@ public class TeamDto {
                 .id(team.getId())
                 .name(team.getName())
                 .teamLead(UserDto.fromModel(ofNullable(team.getTeamLead()).orElse(null)))
-                .teamMembers(team.getTeamMembers()
-                        .stream().map(user -> UserDto.fromModel(ofNullable(user).orElse(null)))
-                        .collect(Collectors.toList()))
+                .teamMembers(team.getTeamMembers() != null ?
+                        team.getTeamMembers().stream()
+                                .map(user -> UserDto.fromModel(ofNullable(user).orElse(null)))
+                        .collect(Collectors.toList()) : null)
                 .build();
     }
 
@@ -60,9 +61,10 @@ public class TeamDto {
                 .id(teamDto.getId())
                 .name(teamDto.getName())
                 .teamLead(UserDto.toModel(ofNullable(teamDto.getTeamLead()).orElse(null)))
-                .teamMembers(teamDto.getTeamMembers()
-                        .stream().map(userDto -> UserDto.toModel(ofNullable(userDto).orElse(null)))
-                        .collect(Collectors.toList()))
+                .teamMembers(teamDto.getTeamMembers() != null ?
+                        teamDto.getTeamMembers().stream()
+                                .map(userDto -> UserDto.toModel(ofNullable(userDto).orElse(null)))
+                        .collect(Collectors.toList()) : null)
                 .build();
     }
 }
