@@ -57,21 +57,12 @@ public class TestData {
                 .id(ORDINARY_CORAL_LYNX_TEAM_UUID)
                 .name("System Team").build();
         if (full) {
-            User teamLeader = User.builder()
-                .id(UUID_1)
-                .displayName("Team Lider").build();
-
+            User teamLeader = CREATE_USER(UUID_1, "User 1");
             team.setTeamLead(teamLeader);
 
-            User teamMember1 = User.builder()
-                    .id(UUID_1)
-                    .displayName("Team Lider").build();
-            User teamMember2 = User.builder()
-                    .id(UUID_2)
-                    .displayName("Team Lider").build();
             List<User> teamMembers = new ArrayList<>();
-            teamMembers.add(teamMember1);
-            teamMembers.add(teamMember2);
+            teamMembers.add(CREATE_USER(UUID_2, "User 2"));
+            teamMembers.add(CREATE_USER(UUID_3, "User 3"));
             teamMembers.add(GIANNI_USER());
 
             team.setTeamMembers(teamMembers);
@@ -100,12 +91,19 @@ public class TestData {
         return GIANNI_USER(true);
     }
 
+    private static User CREATE_USER(UUID id, String displayName) {
+        User user = User.builder()
+                .id(id)
+                .displayName(displayName).build();
+        return user;
+    }
+
     public static Membership DEFAULT_MEMBERSHIP() {
         return Membership.builder()
                 .id(DEFAULT_MEMBERSHIP_UUID)
                 .role(DEVELOPER_ROLE())
-                .userId(GIANNI_USER_UUID)
-                .teamId(ORDINARY_CORAL_LYNX_TEAM_UUID)
+                .user(GIANNI_USER(false))
+                .team(ORDINARY_CORAL_LYNX_TEAM(false))
                 .build();
     }
 
@@ -113,8 +111,8 @@ public class TestData {
         return Membership.builder()
                 .id(DEFAULT_MEMBERSHIP_UUID)
                 .role(DEVELOPER_ROLE())
-                .userId(UUID_4)
-                .teamId(ORDINARY_CORAL_LYNX_TEAM_UUID)
+                .user(CREATE_USER(UUID_4, "User 4"))
+                .team(ORDINARY_CORAL_LYNX_TEAM(false))
                 .build();
     }
 

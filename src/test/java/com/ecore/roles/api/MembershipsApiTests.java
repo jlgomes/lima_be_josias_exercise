@@ -81,7 +81,7 @@ public class MembershipsApiTests {
     @Test
     void shouldFailToCreateRoleMembershipWhenUserIdIsNull() {
         Membership expectedMembership = DEFAULT_MEMBERSHIP();
-        expectedMembership.setUserId(null);
+        expectedMembership.setUser(null);
 
         createMembership(expectedMembership)
                 .validate(400, "Bad Request");
@@ -90,7 +90,7 @@ public class MembershipsApiTests {
     @Test
     void shouldFailToCreateRoleMembershipWhenTeamIdISNull() {
         Membership expectedMembership = DEFAULT_MEMBERSHIP();
-        expectedMembership.setTeamId(null);
+        expectedMembership.setTeam(null);
 
         createMembership(expectedMembership)
                 .validate(400, "Bad Request");
@@ -116,16 +116,16 @@ public class MembershipsApiTests {
     @Test
     void shouldFailToCreateRoleMembershipWhenTeamDoesNotExist() {
         Membership expectedMembership = DEFAULT_MEMBERSHIP();
-        mockGetTeamById(mockServer, expectedMembership.getTeamId(), null);
+        mockGetTeamById(mockServer, expectedMembership.getTeam().getId(), null);
 
         createMembership(expectedMembership)
-                .validate(404, format("Team %s not found", expectedMembership.getTeamId()));
+                .validate(404, format("Team %s not found", expectedMembership.getTeam().getId()));
     }
 
     @Test
     void shouldFailToAssignRoleWhenMembershipIsInvalid() {
         Membership expectedMembership = INVALID_MEMBERSHIP();
-        mockGetTeamById(mockServer, expectedMembership.getTeamId(), ORDINARY_CORAL_LYNX_TEAM());
+        mockGetTeamById(mockServer, expectedMembership.getTeam().getId(), ORDINARY_CORAL_LYNX_TEAM());
 
         createMembership(expectedMembership)
                 .validate(400,
@@ -163,7 +163,7 @@ public class MembershipsApiTests {
 
     private MembershipDto createDefaultMembership() {
         Membership expectedMembership = DEFAULT_MEMBERSHIP();
-        mockGetTeamById(mockServer, expectedMembership.getTeamId(), ORDINARY_CORAL_LYNX_TEAM());
+        mockGetTeamById(mockServer, expectedMembership.getTeam().getId(), ORDINARY_CORAL_LYNX_TEAM());
 
         return createMembership(expectedMembership)
                 .statusCode(201)

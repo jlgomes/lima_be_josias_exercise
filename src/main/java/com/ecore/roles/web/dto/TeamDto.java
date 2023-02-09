@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static java.util.Optional.ofNullable;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -30,11 +32,11 @@ public class TeamDto {
 
     @JsonProperty
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private UUID teamLeadId;
+    private UserDto teamLead;
 
     @JsonProperty
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private List<UUID> teamMemberIds;
+    private List<UserDto> teamMembers;
 
     public static TeamDto fromModel(Team team) {
         if (team == null) {
@@ -43,9 +45,23 @@ public class TeamDto {
         return TeamDto.builder()
                 .id(team.getId())
                 .name(team.getName())
-                .teamLeadId(team.getTeamLead().getId())
-                .teamMemberIds(team.getTeamMembers()
-                        .stream().map(e -> e.getId())
+                .teamLead(UserDto.fromModel(ofNullable(team.getTeamLead()).orElse(null)))
+                .teamMembers(team.getTeamMembers()
+                        .stream().map(user -> UserDto.fromModel(ofNullable(user).orElse(null)))
+                        .collect(Collectors.toList()))
+                .build();
+    }
+
+    public static Team toModel(TeamDto teamDto) {
+        if (teamDto == null) {
+            return null;
+        }
+        return Team.builder()
+                .id(teamDto.getId())
+                .name(teamDto.getName())
+                .teamLead(UserDto.toModel(ofNullable(teamDto.getTeamLead()).orElse(null)))
+                .teamMembers(teamDto.getTeamMembers()
+                        .stream().map(userDto -> UserDto.toModel(ofNullable(userDto).orElse(null)))
                         .collect(Collectors.toList()))
                 .build();
     }

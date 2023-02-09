@@ -1,10 +1,8 @@
 package com.ecore.roles.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.ecore.roles.client.model.Team;
+import com.ecore.roles.client.model.User;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
@@ -17,7 +15,8 @@ import java.util.UUID;
 @Setter
 @Builder
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"team_id", "user_id"}))
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"role_id", "team_id", "user_id"}))
 public class Membership {
 
     @Id
@@ -28,12 +27,16 @@ public class Membership {
 
     @OneToOne
     @JoinColumn(name = "role_id", nullable = false)
+    @EqualsAndHashCode.Include
     private Role role;
 
-    @Column(name = "user_id", nullable = false)
-    private UUID userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    @EqualsAndHashCode.Include
+    private User user;
 
-    @Column(name = "team_id", nullable = false)
-    private UUID teamId;
-
+    @ManyToOne
+    @JoinColumn(name = "team_id", nullable = false)
+    @EqualsAndHashCode.Include
+    private Team team;
 }

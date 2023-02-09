@@ -22,6 +22,7 @@ public class RoleDto {
 
     @JsonProperty
     private UUID id;
+
     @JsonProperty
     @NotBlank
     private String name;
@@ -33,6 +34,16 @@ public class RoleDto {
         return RoleDto.builder()
                 .id(role.getId())
                 .name(role.getName())
+                .build();
+    }
+
+    public static Role toModel(RoleDto roleDto) {
+        if (roleDto == null) {
+            return null;
+        }
+        return Role.builder()
+                .id(roleDto.getId())
+                .name(roleDto.getName())
                 .build();
     }
 

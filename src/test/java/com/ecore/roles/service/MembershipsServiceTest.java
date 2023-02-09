@@ -43,8 +43,8 @@ class MembershipsServiceTest {
         Membership expectedMembership = DEFAULT_MEMBERSHIP();
         when(roleRepository.findById(expectedMembership.getRole().getId()))
                 .thenReturn(Optional.ofNullable(DEVELOPER_ROLE()));
-        when(membershipRepository.findByUserIdAndTeamId(expectedMembership.getUserId(),
-                expectedMembership.getTeamId()))
+        when(membershipRepository.findByUserIdAndTeamId(expectedMembership.getUser().getId(),
+                expectedMembership.getTeam().getId()))
                         .thenReturn(Optional.empty());
         when(membershipRepository
                 .save(expectedMembership))
@@ -66,8 +66,8 @@ class MembershipsServiceTest {
     @Test
     public void shouldFailToCreateMembershipWhenItExists() {
         Membership expectedMembership = DEFAULT_MEMBERSHIP();
-        when(membershipRepository.findByUserIdAndTeamId(expectedMembership.getUserId(),
-                expectedMembership.getTeamId()))
+        when(membershipRepository.findByUserIdAndTeamId(expectedMembership.getUser().getId(),
+                expectedMembership.getTeam().getId()))
                         .thenReturn(Optional.of(expectedMembership));
 
         ResourceExistsException exception = assertThrows(ResourceExistsException.class,

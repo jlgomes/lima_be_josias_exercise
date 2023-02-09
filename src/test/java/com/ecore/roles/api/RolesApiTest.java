@@ -136,7 +136,7 @@ public class RolesApiTest {
         createMembership(expectedMembership)
                 .statusCode(201);
 
-        getRole(expectedMembership.getUserId(), expectedMembership.getTeamId())
+        getRole(expectedMembership.getUser().getId(), expectedMembership.getTeam().getId())
                 .statusCode(200)
                 .body("name", equalTo(expectedMembership.getRole().getName()));
     }
