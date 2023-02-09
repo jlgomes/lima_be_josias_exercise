@@ -35,7 +35,7 @@ public class Team {
     @JoinColumn(name = "team_lead_id", nullable = false)
     private User teamLead;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name="team_members",
             joinColumns = @JoinColumn(name = "team_id"),
             inverseJoinColumns = @JoinColumn(name = "team_member_id"))
