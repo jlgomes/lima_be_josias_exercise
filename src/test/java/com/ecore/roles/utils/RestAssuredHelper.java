@@ -73,7 +73,7 @@ public class RestAssuredHelper {
         return sendRequest(given()
                 .pathParam("roleId", roleId)
                 .when()
-                .get("/v1/roles/memberships")
+                .get("/v1/roles/memberships/{roleId}")
                 .then());
     }
 
