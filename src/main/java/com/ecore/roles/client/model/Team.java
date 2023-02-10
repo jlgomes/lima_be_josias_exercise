@@ -1,14 +1,15 @@
 package com.ecore.roles.client.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,19 +18,26 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
+@Entity
 @EqualsAndHashCode
 public class Team {
 
     @Id
-    @JsonProperty
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Type(type = "uuid-char")
     private UUID id;
 
-    @JsonProperty
+    @Column(nullable = false, unique = true)
     private String name;
 
-    @JsonProperty
-    private UUID teamLeadId;
+    @ManyToOne
+    @JoinColumn(name = "team_lead_id", nullable = false)
+    private User teamLead;
 
-    @JsonProperty
-    private List<UUID> teamMemberIds;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="team_members",
+            joinColumns = @JoinColumn(name = "team_id"),
+            inverseJoinColumns = @JoinColumn(name = "team_member_id"))
+    private List<User> teamMembers;
 }

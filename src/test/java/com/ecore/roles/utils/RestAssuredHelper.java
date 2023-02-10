@@ -54,10 +54,26 @@ public class RestAssuredHelper {
 
     public static EcoreValidatableResponse getRole(UUID userId, UUID teamId) {
         return sendRequest(given()
-                .queryParam("teamMemberId", userId)
-                .queryParam("teamId", teamId)
+                .pathParam("userId", userId)
+                .pathParam("teamId", teamId)
                 .when()
-                .get("/v1/roles/search")
+                .get("/v1/roles/{userId}/{teamId}")
+                .then());
+    }
+
+    public static EcoreValidatableResponse getRoleMissingUserId(UUID teamId) {
+        return sendRequest(given()
+                .pathParam("teamId", teamId)
+                .when()
+                .get("/v1/roles/{teamId}")
+                .then());
+    }
+
+    public static EcoreValidatableResponse getRoleMissingTeamId(UUID userId) {
+        return sendRequest(given()
+                .pathParam("userId", userId)
+                .when()
+                .get("/v1/roles/{userId}")
                 .then());
     }
 
@@ -71,9 +87,16 @@ public class RestAssuredHelper {
 
     public static EcoreValidatableResponse getMemberships(UUID roleId) {
         return sendRequest(given()
-                .queryParam("roleId", roleId)
+                .pathParam("roleId", roleId)
                 .when()
-                .get("/v1/roles/memberships/search")
+                .get("/v1/roles/memberships/{roleId}")
+                .then());
+    }
+
+    public static EcoreValidatableResponse getMembershipsMissingRoleId() {
+        return sendRequest(given()
+                .when()
+                .get("/v1/roles/memberships")
                 .then());
     }
 

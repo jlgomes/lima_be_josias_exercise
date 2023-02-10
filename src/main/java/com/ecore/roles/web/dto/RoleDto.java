@@ -17,13 +17,16 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
-@EqualsAndHashCode
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class RoleDto {
 
     @JsonProperty
+    @EqualsAndHashCode.Include
     private UUID id;
+
     @JsonProperty
     @NotBlank
+    @EqualsAndHashCode.Include
     private String name;
 
     public static RoleDto fromModel(Role role) {
@@ -33,6 +36,16 @@ public class RoleDto {
         return RoleDto.builder()
                 .id(role.getId())
                 .name(role.getName())
+                .build();
+    }
+
+    public static Role toModel(RoleDto roleDto) {
+        if (roleDto == null) {
+            return null;
+        }
+        return Role.builder()
+                .id(roleDto.getId())
+                .name(roleDto.getName())
                 .build();
     }
 

@@ -17,11 +17,13 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
-@EqualsAndHashCode
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class UserDto {
 
     @JsonProperty
+    @EqualsAndHashCode.Include
     private UUID id;
+
     @JsonProperty
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String firstName;
@@ -52,6 +54,20 @@ public class UserDto {
                 .displayName(user.getDisplayName())
                 .avatarUrl(user.getAvatarUrl())
                 .location(user.getLocation())
+                .build();
+    }
+
+    public static User toModel(UserDto userDto) {
+        if (userDto == null) {
+            return null;
+        }
+        return User.builder()
+                .id(userDto.getId())
+                .firstName(userDto.getFirstName())
+                .lastName(userDto.getLastName())
+                .displayName(userDto.getDisplayName())
+                .avatarUrl(userDto.getAvatarUrl())
+                .location(userDto.getLocation())
                 .build();
     }
 }

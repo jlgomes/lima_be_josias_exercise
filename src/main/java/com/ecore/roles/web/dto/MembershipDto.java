@@ -1,7 +1,6 @@
 package com.ecore.roles.web.dto;
 
 import com.ecore.roles.model.Membership;
-import com.ecore.roles.model.Role;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,19 +30,19 @@ public class MembershipDto {
     @Valid
     @NotNull
     @EqualsAndHashCode.Include
-    private UUID roleId;
+    private RoleDto role;
 
-    @JsonProperty(value = "teamMemberId")
+    @JsonProperty(value = "teamMember")
     @Valid
     @NotNull
     @EqualsAndHashCode.Include
-    private UUID userId;
+    private UserDto user;
 
     @JsonProperty
     @Valid
     @NotNull
     @EqualsAndHashCode.Include
-    private UUID teamId;
+    private TeamDto team;
 
     public static MembershipDto fromModel(Membership membership) {
         if (membership == null) {
@@ -51,18 +50,18 @@ public class MembershipDto {
         }
         return MembershipDto.builder()
                 .id(membership.getId())
-                .roleId(ofNullable(membership.getRole()).map(Role::getId).orElse(null))
-                .userId(membership.getUserId())
-                .teamId(membership.getTeamId())
+                .role(RoleDto.fromModel(ofNullable(membership.getRole()).orElse(null)))
+                .user(UserDto.fromModel(ofNullable(membership.getUser()).orElse(null)))
+                .team(TeamDto.fromModel(ofNullable(membership.getTeam()).orElse(null)))
                 .build();
     }
 
     public Membership toModel() {
         return Membership.builder()
                 .id(this.id)
-                .role(Role.builder().id(this.roleId).build())
-                .userId(this.userId)
-                .teamId(this.teamId)
+                .role(RoleDto.toModel(ofNullable(this.role).orElse(null)))
+                .user(UserDto.toModel(ofNullable(this.user).orElse(null)))
+                .team(TeamDto.toModel(ofNullable(this.team).orElse(null)))
                 .build();
     }
 
