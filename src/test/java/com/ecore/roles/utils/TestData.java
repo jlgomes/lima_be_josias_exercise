@@ -74,6 +74,28 @@ public class TestData {
         return ORDINARY_CORAL_LYNX_TEAM(true);
     }
 
+    public static Team INVALID_TEAM(boolean full) {
+        Team team = Team.builder()
+                .id(UUID_4)
+                .name("System Team 4").build();
+        if (full) {
+            User teamLeader = CREATE_USER(UUID_1, "User 1");
+            team.setTeamLead(teamLeader);
+
+            List<User> teamMembers = new ArrayList<>();
+            teamMembers.add(CREATE_USER(UUID_2, "User 2"));
+            teamMembers.add(CREATE_USER(UUID_3, "User 3"));
+            teamMembers.add(GIANNI_USER());
+
+            team.setTeamMembers(teamMembers);
+        }
+        return team;
+    }
+
+    public static Team INVALID_TEAM() {
+        return INVALID_TEAM(true);
+    }
+
     public static User GIANNI_USER(boolean full) {
         User user = User.builder()
                 .id(GIANNI_USER_UUID)
@@ -116,4 +138,12 @@ public class TestData {
                 .build();
     }
 
+    public static Membership INVALID_TEAM_IN_MEMBERSHIP() {
+        return Membership.builder()
+                .id(DEFAULT_MEMBERSHIP_UUID)
+                .role(DEVELOPER_ROLE())
+                .user(CREATE_USER(UUID_4, "User 4"))
+                .team(INVALID_TEAM(false))
+                .build();
+    }
 }

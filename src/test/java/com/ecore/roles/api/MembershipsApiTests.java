@@ -124,8 +124,8 @@ public class MembershipsApiTests {
 
     @Test
     void shouldFailToCreateRoleMembershipWhenTeamDoesNotExist() {
-        Membership expectedMembership = DEFAULT_MEMBERSHIP();
-        mockGetTeamById(mockServer, expectedMembership.getTeam().getId(), null);
+        Membership expectedMembership = INVALID_TEAM_IN_MEMBERSHIP();
+        mockGetTeamById(mockServer, expectedMembership.getTeam().getId(), INVALID_TEAM(false));
 
         createMembership(expectedMembership)
                 .validate(404, format("Team %s not found", expectedMembership.getTeam().getId()));
