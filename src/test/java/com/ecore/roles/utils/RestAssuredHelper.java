@@ -61,6 +61,22 @@ public class RestAssuredHelper {
                 .then());
     }
 
+    public static EcoreValidatableResponse getRoleMissingUserId(UUID teamId) {
+        return sendRequest(given()
+                .pathParam("teamId", teamId)
+                .when()
+                .get("/v1/roles/{teamId}")
+                .then());
+    }
+
+    public static EcoreValidatableResponse getRoleMissingTeamId(UUID userId) {
+        return sendRequest(given()
+                .pathParam("userId", userId)
+                .when()
+                .get("/v1/roles/{userId}")
+                .then());
+    }
+
     public static EcoreValidatableResponse createMembership(Membership membership) {
         return sendRequest(givenNullableBody(MembershipDto.fromModel(membership))
                 .contentType(JSON)
@@ -74,6 +90,13 @@ public class RestAssuredHelper {
                 .pathParam("roleId", roleId)
                 .when()
                 .get("/v1/roles/memberships/{roleId}")
+                .then());
+    }
+
+    public static EcoreValidatableResponse getMembershipsMissingRoleId() {
+        return sendRequest(given()
+                .when()
+                .get("/v1/roles/memberships")
                 .then());
     }
 

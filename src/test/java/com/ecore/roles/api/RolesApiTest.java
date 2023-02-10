@@ -16,11 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Optional;
 
 import static com.ecore.roles.utils.MockUtils.mockGetTeamById;
-import static com.ecore.roles.utils.RestAssuredHelper.createMembership;
-import static com.ecore.roles.utils.RestAssuredHelper.createRole;
-import static com.ecore.roles.utils.RestAssuredHelper.getRole;
-import static com.ecore.roles.utils.RestAssuredHelper.getRoles;
-import static com.ecore.roles.utils.RestAssuredHelper.sendRequest;
+import static com.ecore.roles.utils.RestAssuredHelper.*;
 import static com.ecore.roles.utils.TestData.DEFAULT_MEMBERSHIP;
 import static com.ecore.roles.utils.TestData.DEVELOPER_ROLE;
 import static com.ecore.roles.utils.TestData.DEVOPS_ROLE;
@@ -143,14 +139,14 @@ public class RolesApiTest {
 
     @Test
     void shouldFailToGetRoleByUserIdAndTeamIdWhenMissingUserId() {
-        getRole(null, ORDINARY_CORAL_LYNX_TEAM_UUID)
-                .validate(400, "Bad Request");
+        getRoleMissingUserId(ORDINARY_CORAL_LYNX_TEAM_UUID)
+                .validate(404, "Role 4c5a99a1-48ab-4654-8692-dbd41eb2714b not found");
     }
 
     @Test
     void shouldFailToGetRoleByUserIdAndTeamIdWhenMissingTeamId() {
-        getRole(GIANNI_USER_UUID, null)
-                .validate(400, "Bad Request");
+        getRoleMissingTeamId(GIANNI_USER_UUID)
+                .validate(404, "Role fd282131-d8aa-4819-b0c8-d9e0bfb1b75c not found");
     }
 
     @Test
