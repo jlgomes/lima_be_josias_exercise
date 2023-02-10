@@ -17,14 +17,16 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
-@EqualsAndHashCode
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class RoleDto {
 
     @JsonProperty
+    @EqualsAndHashCode.Include
     private UUID id;
 
     @JsonProperty
     @NotBlank
+    @EqualsAndHashCode.Include
     private String name;
 
     public static RoleDto fromModel(Role role) {

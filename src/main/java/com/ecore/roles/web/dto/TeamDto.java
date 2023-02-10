@@ -21,13 +21,15 @@ import static java.util.Optional.ofNullable;
 @Getter
 @Setter
 @Builder
-@EqualsAndHashCode
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class TeamDto {
 
     @JsonProperty
+    @EqualsAndHashCode.Include
     private UUID id;
 
     @JsonProperty
+    @EqualsAndHashCode.Include
     private String name;
 
     @JsonProperty

@@ -17,10 +17,11 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
-@EqualsAndHashCode
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class UserDto {
 
     @JsonProperty
+    @EqualsAndHashCode.Include
     private UUID id;
 
     @JsonProperty
